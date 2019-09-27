@@ -1,3 +1,39 @@
+<?php
+
+require ('funcoes.php');
+
+	if (!empty ($_POST['acao']))
+	{
+	
+		if ($_POST['acao'] == 'adicionar')
+		{
+			criarAtividade  ($_POST ['cont']);	
+		} 
+
+		else if ($_POST['acao'] == 'mais')
+		{
+			 incrementarContador($_POST ['codigo']);	
+		} 
+
+		else if ($_POST['acao'] == 'menos')
+		{
+			 decrementarContador($_POST ['codigo']);	
+		} 
+
+		else if ($_POST['acao'] == 'lixo')
+		{
+			 deletarcont($_POST ['codigo']);	
+		} 
+
+		
+	}
+
+	$Atividades = buscarAtividades();
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,11 +57,12 @@
 	<main class="container">
 
 		<!-- lista de tarefas cadastradas -->
-
+		<?php foreach ($Atividades as $at): ?>			
+		
 		<div class="card mb-3">
 			<div class="card-body">
-				<h5 class="card-title">Tarefa 1</h5>
-				<p class="card-text text-muted">Prazo: 2 jun</p>
+				<h5 class="card-title"> <?= $at['Descricao']?></h5>
+				<p class="card-text text-muted"><?= $at['Prazo']?></p>
 			</div>
 			<div class="card-footer text-right">
 				
@@ -46,58 +83,9 @@
 
 			</div>
 		</div>
+	     <?php endforeach; ?>	
 
-		<div class="card mb-3">
-			<div class="card-body">
-				<h5 class="card-title">Tarefa 2</h5>
-				<p class="card-text text-muted">Prazo: 30 mai</p>
-			</div>
-			<div class="card-footer text-right">
-				
-				<form action="index.php" method="post">
-
-					<!-- dica: colocar um input hidden aqui -->
-
-					<button type="submit" name="acao" value="excluir" class="btn btn-link btn-excluir">
-						<span class="oi oi-trash" title="trash"></span>
-						Excluir
-					</button>
-					<button type="submit" name="acao" value="concluir" class="btn btn-primary">
-						<span class="oi oi-check" title="trash"></span>
-						Concluir
-					</button>
-
-				</form>
-
-			</div>
-		</div>
-
-		<div class="card mb-3">
-			<div class="card-body">
-				<h5 class="card-title">
-					<del>Tarefa 3</del>
-				</h5>
-				<p class="card-text text-muted"></p>
-			</div>
-			<div class="card-footer text-right">
-				
-				<form action="index.php" method="post">
-
-					<!-- dica: colocar um input hidden aqui -->
-
-					<button type="submit" name="acao" value="excluir" class="btn btn-link btn-excluir">
-						<span class="oi oi-trash" title="trash"></span>
-						Excluir
-					</button>
-					<button type="submit" name="acao" value="concluir" class="btn btn-outline-primary" disabled>
-						<span class="oi oi-check" title="trash"></span>
-						Concluir
-					</button>
-
-				</form>
-
-		</div>
-
+		
 
 		<!-- botao flutuante -->
 
