@@ -7,12 +7,12 @@ require ('funcoes.php');
 	
 		if ($_POST['acao'] == 'adicionar')
 		{
-			criarAtividade  ($_POST ['cont']);	
+			criarAtividade  ($_POST ['descricao'], $_POST['prazo']);	
 		} 
 
-		else if ($_POST['acao'] == 'mais')
+		else if ($_POST['acao'] == 'concluir')
 		{
-			 incrementarContador($_POST ['codigo']);	
+			 concluirAtividade($_POST ['Codigo']);	
 		} 
 
 		else if ($_POST['acao'] == 'menos')
@@ -20,9 +20,9 @@ require ('funcoes.php');
 			 decrementarContador($_POST ['codigo']);	
 		} 
 
-		else if ($_POST['acao'] == 'lixo')
+		else if ($_POST['acao'] == 'excluir')
 		{
-			 deletarcont($_POST ['codigo']);	
+			 deletarAtividade($_POST ['Codigo']);	
 		} 
 
 		
@@ -61,7 +61,20 @@ require ('funcoes.php');
 		
 		<div class="card mb-3">
 			<div class="card-body">
-				<h5 class="card-title"> <?= $at['Descricao']?></h5>
+				<h5 class="card-title"> 
+				<?php if($at['Concluida'] == 's'): ?>
+
+					<del> 
+						<?= $at['Descricao']?>
+				    </del>
+
+				<?php else: ?>
+
+					<?= $at['Descricao']?>
+				
+				<?php endif; ?>					
+				
+				</h5>
 				<p class="card-text text-muted"><?= $at['Prazo']?></p>
 			</div>
 			<div class="card-footer text-right">
@@ -69,12 +82,21 @@ require ('funcoes.php');
 				<form action="index.php" method="post">
 
 					<!-- dica: colocar um input hidden aqui -->
+					<input type="hidden" name="Codigo" value= "<?= $at['Codigo']?>">
 
 					<button type="submit" name="acao" value="excluir" class="btn btn-link btn-excluir">
 						<span class="oi oi-trash" title="trash"></span>
 						Excluir
 					</button>
-					<button type="submit" name="acao" value="concluir" class="btn btn-primary">
+					<button type="submit" name="acao" value="concluir" class="btn btn-primary"
+
+					<?php if($at['Concluida'] == 's'): ?>
+						disabled		
+				
+					<?php endif; ?>>	
+				
+
+
 						<span class="oi oi-check" title="trash"></span>
 						Concluir
 					</button>
